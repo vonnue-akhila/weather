@@ -17,7 +17,7 @@ jobs:
         run: echo "LATEST_RELEASE=$(git describe --tags)" >> $GITHUB_ENV
 
       - name: Update README badge
-        run: sed -i 's/github\/v\/release\/EENCloud\/EEN-CLI-Public/github\/v\/release\/EENCloud\/EEN-CLI-Public\/$LATEST_RELEASE/' README.md
+        run: sed -i 's/github\/v\/release\/vonnue-akhila\/weather/github\/v\/release\/vonnue-akhila\/weather\/$LATEST_RELEASE/' README.md
 
       - name: Commit changes
         run: |
