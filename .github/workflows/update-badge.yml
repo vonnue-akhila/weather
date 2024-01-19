@@ -1,0 +1,31 @@
+name: Update README Badge
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  update-badge:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set latest release version
+        run: echo "LATEST_RELEASE=$(git describe --tags)" >> $GITHUB_ENV
+
+      - name: Update README badge
+        run: sed -i 's/github\/v\/release\/EENCloud\/EEN-CLI-Public/github\/v\/release\/EENCloud\/EEN-CLI-Public\/$LATEST_RELEASE/' README.md
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Update README badge [skip ci]"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          branch: ${{ github.head_ref }}
